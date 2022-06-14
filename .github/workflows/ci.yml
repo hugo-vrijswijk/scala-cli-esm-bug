@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: coursier/cache-action@v6.3
+      - uses: VirtusLab/scala-cli-setup@v0.1
+      - name: Compile
+        run: scala-cli compile . --js
+      - name: Package
+        run: scala-cli package . --js -o index.mjs
+      - name: Run (node)
+        run: node ./index.mjs
+      - name: Run (scala-cli)
+        run: scala-cli run . --js

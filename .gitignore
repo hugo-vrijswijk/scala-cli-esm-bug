@@ -1,2 +1,8 @@
 *.class
 *.log
+target
+node_modules/
+.bsp/
+.metals/
+.scala-build/
+index.mjs
